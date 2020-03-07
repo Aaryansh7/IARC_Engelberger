@@ -1,5 +1,7 @@
 int ir[6],er[6],res[6],preErr[6];
 int enR=7 ,enL=10,in1L=16,in2L=17,in1R=14,in2R=15;
+int A,B,C,D,num;
+node_det=0;
 
 void setup() 
 {
@@ -20,7 +22,7 @@ void loop() {
     ir [3] = analogRead(A8);
     ir [4] = analogRead(A12);
     ir [5] = analogRead(A6);
-    node_det=0;
+    
     for (int i=0; i<6; ++i)
     {
       if(ir[i]>200)
@@ -358,7 +360,7 @@ void loop() {
 
    //case4:all black
      else if(ir[0]==0 && ir[1]==0 && ir[2]==0 && ir[3]==0 && ir[4]==0 && ir[5]==0)
-     {forwrad();
+     {forward();
       C=1;
       D=1;
       node=node+1;
@@ -399,6 +401,14 @@ void loop() {
     Serial.println();
    }
 }
+
+int bin_dec(A,B,C,D)
+{
+  num=8*A + 4*B +2*C +D;
+  return num;
+}
+
+
 
 
 void right()
@@ -444,15 +454,4 @@ void Stop(){
 Serial.println("Stop");
 }
 
-   
-
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
+ 
