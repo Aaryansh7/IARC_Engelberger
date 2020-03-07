@@ -1,0 +1,91 @@
+int ir[6],er[6],res[6],preErr[6];
+int enR=7 ,enL=10,in1L=16,in2L=17,in1R=14,in2R=15;
+void setup() 
+{
+    Serial.begin(9600);
+  pinMode(in1L,OUTPUT);
+  pinMode(in1R,OUTPUT);
+  pinMode(in2L,OUTPUT);
+  pinMode(in2R,OUTPUT);
+  pinMode(enR,OUTPUT);
+  pinMode(enL,OUTPUT);
+  forward();
+}
+
+void loop() {
+    ir [0] = analogRead(A2);
+    ir [1] = analogRead(A0);
+    ir [2] = analogRead(A1);
+    ir [3] = analogRead(A8);
+    ir [4] = analogRead(A12);
+    ir [5] = analogRead(A6);
+    for (int i=0; i<6; ++i)
+    {
+      if(ir[i]>200)
+        ir[i]=1;
+       else
+        ir[i]=0;
+    } 
+
+
+    if(ir[5]==0 && ir[3]==1 && ir[0]==1)
+    left();
+    if(ir[5]==1 && ir[3]==0 && ir[0]==1)
+    forward();
+    if(ir[5]==1 && ir[3]==1 && ir[0]==0)
+    right();
+    if(ir[5]==0 && ir[3]==0 && ir[0]==0)
+    forward();
+    
+
+    for(int i=0;i<6;i++)
+    {
+      Serial.print(ir[i]);
+      Serial.print(" ");
+    }
+    Serial.println();
+}
+
+
+void right()
+{
+  analogWrite(enR,255);
+  analogWrite(enL,255);
+  digitalWrite(in2R, LOW);
+  digitalWrite(in1R, HIGH);
+  digitalWrite(in2L, LOW);
+  digitalWrite(in1L, HIGH);
+  Serial.println("RIGHT");  
+}
+
+
+void left()
+{
+  analogWrite(enR,255);
+  analogWrite(enL,255);
+  digitalWrite(in2R, HIGH);
+  digitalWrite(in1R, LOW);
+  digitalWrite(in2L, HIGH);
+  digitalWrite(in1L, LOW);
+  Serial.println("LEFT");
+}
+
+void forward()
+{
+  analogWrite(enR,255);
+  analogWrite(enL,255);
+  digitalWrite(in1L, LOW);
+  digitalWrite(in2L, HIGH);
+  digitalWrite(in2R, LOW);
+  digitalWrite(in1R, HIGH);
+  Serial.println("forward2");
+  
+}
+
+void Stop(){
+  digitalWrite(in1L, LOW);
+  digitalWrite(in2L, LOW);
+  digitalWrite(in2R, LOW);
+  digitalWrite(in1R, LOW);
+Serial.println("Stop");
+}
